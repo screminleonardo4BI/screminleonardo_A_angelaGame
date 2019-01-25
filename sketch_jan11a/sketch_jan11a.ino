@@ -12,6 +12,7 @@
   String giocatore2;
   String nG2;
   bool terminato;
+  String sommanumeri;
   
 
 
@@ -37,6 +38,9 @@ terminato = false;
   {
    turnoG2();
   }
+
+  somma();
+  vittoria();
   
     
  
@@ -79,5 +83,31 @@ void turnoG1()
    Serial.println(nG2.toInt());
     terminato = true;
     }
+  }
+
+ void somma()
+ {
+  sommanumeri = nG1.toInt() + nG2.toInt();
+  Serial.println(sommanumeri.toInt());
+  }
+
+  void vittoria()
+  {
+    if(nG1.toInt() == meta)
+    {
+      Serial.println("Vince il giocatore 1");
+      }
+      else if (nG1.toInt() > meta)
+      {
+        Serial.println("Vince il giocatore 2");
+        }
+        if(nG2.toInt() == meta)
+        {
+          Serial.println("Vince giocatore 2");
+          }
+          else if (nG2.toInt() > meta)
+          {
+            Serial.println("Vince giocatore 1");
+            }
+      
     }
-  
