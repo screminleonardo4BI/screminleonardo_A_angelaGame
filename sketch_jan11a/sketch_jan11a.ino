@@ -13,7 +13,7 @@
   String nG2;
   bool terminato;
   String sommanumeri;
-  
+  bool start;
 
 
 
@@ -24,13 +24,20 @@ pinMode(buttongrey, INPUT_PULLUP);
 pinMode(buttonblue, INPUT_PULLUP);
 Serial.begin(9600);
 terminato = false;
+start = false;
  }
 
  void loop() {
   // put your main code here, to run repeatedly:
 
-  
-  if(!terminato)
+
+if(start == false)
+{
+  Meta();
+}
+ else
+ {
+   if(!terminato)
   {
     turnoG1();
   }
@@ -38,10 +45,12 @@ terminato = false;
   {
    turnoG2();
   }
+ }
+ 
 
   somma();
   vittoria();
-  
+ 
     
  
 
@@ -50,13 +59,37 @@ terminato = false;
   
  void Meta()
  {
-   Serial.println("Inserire un numero compreso tra 30 e 99");
+  Serial.println("Inserire un numero compreso tra 30 e 99");
   while(Serial.available() == 0)
   {}
     meta = Serial.parseInt();
     Serial.println("Meta settata a  :");
+    start = true;
     Serial.println(String(meta));
- }
+
+    if(meta < 30)
+    {
+      Serial.println("META NON VALIDA, inserire un numero tra 30 e 99");
+      }
+
+else 
+{
+ Serial.println(String(meta)); 
+  } 
+  if(meta > 99)
+  {
+    Serial.println("META NON VALIDA,Inserire un numero compreso tra 30 e 99");
+    }
+    else
+    {
+     Serial.println(String(meta));
+      }    
+        }
+        
+      
+
+   
+ 
 
 void turnoG1()
 {
@@ -111,3 +144,5 @@ void turnoG1()
             }
       
     }
+
+  
