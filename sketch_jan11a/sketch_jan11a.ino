@@ -14,17 +14,18 @@
   bool terminato;
   String sommanumeri;
   bool start;
+  int punteggioG1 = 0;
+  int punteggioG2 = 0;
+  bool finito;
 
 
 
  void setup() {
   // put your setup code here, to run once:
-pinMode(buttonred, INPUT_PULLUP);
-pinMode(buttongrey, INPUT_PULLUP);
-pinMode(buttonblue, INPUT_PULLUP);
 Serial.begin(9600);
 terminato = false;
 start = false;
+finito = false;
  }
 
  void loop() {
@@ -48,9 +49,6 @@ if(start == false)
  }
  
 
-  somma();
-  vittoria();
- 
     
  
 
@@ -64,15 +62,23 @@ if(start == false)
   {}
     meta = Serial.parseInt();
     Serial.println("Meta settata a  :");
-    start = true;
+    
     Serial.println(String(meta));
 
     if(meta < 30)
     {
       Serial.println("META NON VALIDA, inserire un numero tra 30 e 99");
+      terminato = false;
       }
 
-else 
+
+      else
+      {
+        Serial.println(meta);
+        start = true;
+      }
+
+/* else 
 {
  Serial.println(String(meta)); 
   } 
@@ -86,9 +92,9 @@ else
       }    
         }
         
-      
+  */    
 
-   
+ }
  
 
 void turnoG1()
@@ -98,51 +104,105 @@ void turnoG1()
   {
     
    nG1 =  Serial.readString();
-
+   
    Serial.println(nG1.toInt());
     terminato = true;
+    CheckG1();
+    punteggioG1 = punteggioG1 + nG1.toInt();
     }
     
   }
 
+
   void turnoG2()
   {
-    Serial.println("G2 deve inserire un numero compreso tra 1 e 6");
+    if(finito != true)
+    {
+      Serial.println("G2 deve inserire un numero compreso tra 1 e 6");
   if(Serial.available() > 0)
   {
     
    nG2 =  Serial.readString();
-
+   
    Serial.println(nG2.toInt());
-    terminato = true;
+    terminato = false;
+    CheckG2();
+     punteggioG2 = punteggioG2 + nG2.toInt();
     }
   }
+
+  else
+  {
+    Serial.end();
+  }
+    }
+    
+
+void Checknumbers()
+{
+  if(nG1.toInt() > 6)
+  {
+    Serial.print("PUNTATA NON VALIDA, inserire un numero compreso tra 1 e 6");
+    }
+    else if(nG2.toInt() > 6)
+    {
+      Serial.print("PUNTATA NON VALIDA, inserire un numero compreso tra 1 e 6");
+      }
+      else if(nG1.toInt() == nG2.toInt())
+      {
+        Serial.print("PUNTATA NON VALIDA, non puoi inserire un numero uguale a quello puntato dall'altro giocatore");
+        }
+        else if(nG2.toInt() == nG1.toInt())
+        {
+          Serial.print("PUNTATA NON VALIDA, non puoi inserire un numero uguale a quello puntato dall'altro giocatore");
+          }
+          
+  }
+
+  
+
+  void CheckG1()
+  {
+    if(nG1.toInt() + punteggioG1 + punteggioG2 == meta)
+    {
+      Serial.println("Vince giocatore 1");
+      finito = true;
+      
+      }
+      else if (nG1.toInt() + punteggioG1 + punteggioG2 > meta)
+      {
+        Serial.println("Vince giocatore 2");
+        finito = true;
+        Serial.end();
+        
+        }
+        
+    
+  }
+
+  void CheckG2()
+  {
+    if(nG2.toInt() + punteggioG2 + punteggioG1 == meta)
+    {
+      Serial.println("Vince giocatore 2");      
+      finito = true;
+      Serial.end();
+      }
+      else if (nG1.toInt() + punteggioG1 + punteggioG2 > meta)
+      {
+        Serial.println("Vince giocatore 1");
+        finito = true;
+        Serial.end();
+        }
+ 
+        
+    }
 
  void somma()
  {
-  sommanumeri = nG1.toInt() + nG2.toInt();
+  sommanumeri = punteggioG1 + punteggioG2;
   Serial.println(sommanumeri.toInt());
   }
-
-  void vittoria()
-  {
-    if(nG1.toInt() == meta)
-    {
-      Serial.println("Vince il giocatore 1");
-      }
-      else if (nG1.toInt() > meta)
-      {
-        Serial.println("Vince il giocatore 2");
-        }
-        if(nG2.toInt() == meta)
-        {
-          Serial.println("Vince giocatore 2");
-          }
-          else if (nG2.toInt() > meta)
-          {
-            Serial.println("Vince giocatore 1");
-            }
-      
-    }
+    
 
   
