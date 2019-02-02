@@ -17,6 +17,7 @@
   int punteggioG1 = 0;
   int punteggioG2 = 0;
   bool finito;
+  bool checknmb;
 
 
 
@@ -26,6 +27,7 @@ Serial.begin(9600);
 terminato = false;
 start = false;
 finito = false;
+checknmb = false;
  }
 
  void loop() {
@@ -137,27 +139,70 @@ void turnoG1()
   }
     }
     
-
 void Checknumbers()
 {
   if(nG1.toInt() > 6)
   {
+    
     Serial.print("PUNTATA NON VALIDA, inserire un numero compreso tra 1 e 6");
-    }
+  }
+    
     else if(nG2.toInt() > 6)
     {
+      
       Serial.print("PUNTATA NON VALIDA, inserire un numero compreso tra 1 e 6");
+      
       }
       else if(nG1.toInt() == nG2.toInt())
       {
+        
         Serial.print("PUNTATA NON VALIDA, non puoi inserire un numero uguale a quello puntato dall'altro giocatore");
+        
         }
         else if(nG2.toInt() == nG1.toInt())
         {
-          Serial.print("PUNTATA NON VALIDA, non puoi inserire un numero uguale a quello puntato dall'altro giocatore");
-          }
           
+          Serial.print("PUNTATA NON VALIDA, non puoi inserire un numero uguale a quello puntato dall'altro giocatore");
+      
+          }
+          else if (nG1.toInt() == 1 && nG2.toInt() == 6) 
+          {
+            
+            Serial.print("PUNTATA NON VALIDA");
+            
+            }
+            else if (nG2.toInt() == 1 && nG1.toInt() == 6)
+            {
+         
+            Serial.print("PUNTATA NON VALIDA");
+            
+            }
+          else if (nG1.toInt() == 2 && nG2.toInt() == 5) 
+          {
+         
+            Serial.print("PUNTATA NON VALIDA");
+           
+            }
+            else if (nG2.toInt() == 2 && nG1.toInt() == 5)
+            {
+            
+              Serial.print("PUNTATA NON VALIDA");
+        
+              }
+            else if (nG1.toInt() == 3 && nG2.toInt() == 4) 
+            {
+          
+              Serial.print("PUNTATA NON VALIDA");
+          
+              }
+              else if (nG2.toInt() == 3 && nG1.toInt() == 4)
+              {
+               
+                 Serial.print("PUNTATA NON VALIDA");
+             
+               }
   }
+
 
   
 
